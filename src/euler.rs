@@ -33,7 +33,7 @@ impl<T: Float + ScalarOperand> IVPintegrator<T> for ExplicitEuler<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Vector;
+    use crate::StaticVector;
     use ndarray::Array;
 
     const T_MAX_LOGISTIC: f64 = 20.0;
@@ -41,7 +41,7 @@ mod tests {
     const Y0_LOGISTIC: f64 = 0.01;
     const K_CONST_LOGISTIC: f64 = 10.0;
 
-    fn logistic_rhs(_t: f64, y: &Vector<f64>) -> Vector<f64> {
+    fn logistic_rhs(_t: f64, y: &StaticVector<f64>) -> StaticVector<f64> {
         let y_diff = -y + 1.0;
         return y * y_diff * K_CONST_LOGISTIC;
     }
