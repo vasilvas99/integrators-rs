@@ -55,7 +55,7 @@ mod tests {
     fn explicit_euler_logistic() {
         let mut problem = IVProblem::new(0.0, Array::from_vec(vec![Y0_LOGISTIC]), logistic_rhs);
         let integrator = ExplicitEuler::new(STEP_LOGISTIC);
-        problem.step_until(&integrator, T_MAX_LOGISTIC);
+        integrator.step_until(&mut problem, T_MAX_LOGISTIC);
 
         let y_result = problem.y[0];
         let y_exact = logistic_exact(problem.t);

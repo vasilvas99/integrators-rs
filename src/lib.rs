@@ -16,9 +16,6 @@ impl<T: Float> IVProblem<T> {
     pub fn new(t: T, y: Vector<T>, rhs: RhsFunc<T>) -> IVProblem<T> {
         IVProblem { t, y, rhs }
     }
-    pub fn step_until(&mut self, integrator: &impl IVPintegrator<T>, t_final: T) {
-        integrator.step_until(self, t_final)
-    }
 }
 
 pub trait IVPintegrator<T> {
