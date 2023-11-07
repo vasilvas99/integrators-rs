@@ -12,10 +12,7 @@ pub struct IVProblem<T> {
     pub rhs: RhsFunc<T>,
 }
 
-impl<T> IVProblem<T>
-where
-    T: Float,
-{
+impl<T: Float> IVProblem<T> {
     pub fn new(t: T, y: Vector<T>, rhs: RhsFunc<T>) -> IVProblem<T> {
         IVProblem { t, y, rhs }
     }
