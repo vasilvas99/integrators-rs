@@ -20,8 +20,9 @@ impl<T: Float + ScalarOperand> IVPintegrator<T> for ExplicitEuler<T> {
             return;
         }
 
-        // Safety: ceil ensures that number can be represented as int
-        let num_steps = ((t_final - problem.t) / self.step).ceil().to_i64().unwrap();
+        // Safety: if this overflows u64, then the number of steps is too large anyway
+        // and its okay to panic.
+        let num_steps = ((t_final - problem.t) / self.step).ceil().to_u64().unwrap();
 
         for _ in 0..num_steps {
             problem.y = &problem.y + (problem.rhs)(problem.t, &problem.y) * self.step;
