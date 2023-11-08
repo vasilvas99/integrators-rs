@@ -31,10 +31,7 @@ impl<T: Float + ScalarOperand> PredictorCorrector11<T> {
     /// if num_iters is None, the default value that will be used is 3
     pub fn new(step: T, num_iters: Option<u64>) -> PredictorCorrector11<T> {
         let num_iters = num_iters.unwrap_or(3);
-        PredictorCorrector11 {
-            step,
-            num_iters,
-        }
+        PredictorCorrector11 { step, num_iters }
     }
 }
 
@@ -43,10 +40,7 @@ impl<T: Float + ScalarOperand> PredictorCorrector12<T> {
     /// if num_iters is None, the default value that will be used is 3
     pub fn new(step: T, num_iters: Option<u64>) -> PredictorCorrector12<T> {
         let num_iters = num_iters.unwrap_or(3);
-        PredictorCorrector12 {
-            step,
-            num_iters,
-        }
+        PredictorCorrector12 { step, num_iters }
     }
 }
 

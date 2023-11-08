@@ -1,9 +1,13 @@
+use std::error::Error;
+
 use clap::Parser;
+use gnuplot::{
+    AxesCommon, Caption, Color, Figure,
+    PlotOption::{LineStyle, LineWidth},
+    AutoOption
+};
 use integrators_rs::{euler::PredictorCorrector12, IVPIntegrator, IVProblem, StaticVector};
 use ndarray::Array;
-use plotly::common::Title;
-use plotly::layout::{Axis, Layout};
-use plotly::{Plot, Scatter};
 
 static GRAVITY: f64 = 9.81; // m*s^-2
 
@@ -71,26 +75,31 @@ fn rhs_params(
     Array::from_vec(res)
 }
 
-fn plot(x_vals: Vec<f64>, y_vals: Vec<f64>, params: &Args) {
-    let layout = Layout::new()
-        .x_axis(Axis::new().title(Title::from("X (meters)")))
-        .y_axis(Axis::new().title(Title::from("Y (meters)")))
-        .title(Title::from(
-            format!(
-                "Rocket trajectory. Mass: {m} kg, Drag coeff: {c}, v0: {v0} m/s",
+fn plot(x_vals: Vec<f64>, y_vals: Vec<f64>, params: &Args) -> Result<(), Box<dyn Error>> {
+    let mut fg = Figure::new();
+    fg.axes2d()
+        .set_title(
+            &format!(
+                "Mass: {m} kg, Drag coeff: {c}, v0: {v0} m/s",
                 m = params.object_mass,
                 c = params.air_drag,
                 v0 = params.v0
-            )
-            .as_ref(),
-        ))
-        .height(800);
-
-    let mut plot = Plot::new();
-    let trace = Scatter::new(x_vals, y_vals);
-    plot.add_trace(trace);
-    plot.set_layout(layout);
-    plot.show()
+            ),
+            &[],
+        )
+        .lines(
+            &x_vals,
+            &y_vals,
+            &[
+                LineWidth(2.),
+                Color("black"),
+                LineStyle(gnuplot::Solid),
+                Caption(&format!("Rocket trajectory")),
+            ],
+        ).
+        set_y_range(AutoOption::Fix(0.0), AutoOption::Auto);
+    fg.show_and_keep_running()?;
+    Ok(())
 }
 
 fn main() {
@@ -125,5 +134,5 @@ fn main() {
         println!("{}", problem.y)
     }
     println!("{:?}", cli);
-    plot(x_vals, y_vals, &cli);
+    plot(x_vals, y_vals, &cli).expect("Plotting failed");
 }
