@@ -8,3 +8,7 @@ edition = "2021"
 [dependencies]
 ndarray = "0.15.6"
 num = "0.4.1"
+
+[dev-dependencies]
+clap = { version ="4.0", features = ["derive"] }
+plotly = "0.8.4"

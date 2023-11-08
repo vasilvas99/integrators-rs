@@ -1,20 +1,27 @@
 use ndarray::prelude::*;
 use num::Float;
 
-type StaticVector<T> = Array1<T>;
-type RhsFunc<T> = fn(T, &StaticVector<T>) -> StaticVector<T>;
+pub type StaticVector<T> = Array1<T>;
 
 pub mod euler;
 
 pub struct IVProblem<T> {
     pub t: T,
     pub y: StaticVector<T>,
-    pub rhs: RhsFunc<T>,
+    pub rhs: Box<dyn Fn(T, &StaticVector<T>) -> StaticVector<T>>,
 }
 
 impl<T: Float> IVProblem<T> {
-    pub fn new(t: T, y: StaticVector<T>, rhs: RhsFunc<T>) -> IVProblem<T> {
-        IVProblem { t, y, rhs }
+    pub fn new(
+        t: T,
+        y: StaticVector<T>,
+        rhs: impl Fn(T, &StaticVector<T>) -> StaticVector<T> + 'static,
+    ) -> IVProblem<T> {
+        IVProblem {
+            t,
+            y,
+            rhs: Box::new(rhs),
+        }
     }
 }
 
