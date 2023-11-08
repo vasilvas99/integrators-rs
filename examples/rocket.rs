@@ -2,9 +2,8 @@ use std::error::Error;
 
 use clap::Parser;
 use gnuplot::{
-    AxesCommon, Caption, Color, Figure,
+    AutoOption, AxesCommon, Caption, Color, Figure,
     PlotOption::{LineStyle, LineWidth},
-    AutoOption
 };
 use integrators_rs::{euler::PredictorCorrector12, IVPIntegrator, IVProblem, StaticVector};
 use ndarray::Array;
@@ -96,8 +95,8 @@ fn plot(x_vals: Vec<f64>, y_vals: Vec<f64>, params: &Args) -> Result<(), Box<dyn
                 LineStyle(gnuplot::Solid),
                 Caption(&format!("Rocket trajectory")),
             ],
-        ).
-        set_y_range(AutoOption::Fix(0.0), AutoOption::Auto);
+        )
+        .set_y_range(AutoOption::Fix(0.0), AutoOption::Auto);
     fg.show_and_keep_running()?;
     Ok(())
 }
