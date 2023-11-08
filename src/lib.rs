@@ -24,6 +24,6 @@ impl<T: Float> IVProblem<T> {
     }
 }
 
-pub trait IVPintegrator<T> {
+pub trait IVPIntegrator<T> {
     fn step_until(&self, problem: &mut IVProblem<T>, t_final: T);
 }

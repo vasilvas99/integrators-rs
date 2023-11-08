@@ -1,6 +1,6 @@
 use num::Float;
 
-use crate::IVPintegrator;
+use crate::IVPIntegrator;
 use crate::IVProblem;
 use ndarray::ScalarOperand;
 
@@ -50,7 +50,7 @@ impl<T: Float + ScalarOperand> PredictorCorrector12<T> {
     }
 }
 
-impl<T: Float + ScalarOperand> IVPintegrator<T> for ExplicitEuler<T> {
+impl<T: Float + ScalarOperand> IVPIntegrator<T> for ExplicitEuler<T> {
     fn step_until(&self, problem: &mut IVProblem<T>, t_final: T) {
         if t_final <= problem.t {
             return;
@@ -67,7 +67,7 @@ impl<T: Float + ScalarOperand> IVPintegrator<T> for ExplicitEuler<T> {
     }
 }
 
-impl<T: Float + ScalarOperand> IVPintegrator<T> for PredictorCorrector11<T> {
+impl<T: Float + ScalarOperand> IVPIntegrator<T> for PredictorCorrector11<T> {
     fn step_until(&self, problem: &mut IVProblem<T>, t_final: T) {
         if t_final <= problem.t {
             return;
@@ -88,7 +88,7 @@ impl<T: Float + ScalarOperand> IVPintegrator<T> for PredictorCorrector11<T> {
     }
 }
 
-impl<T> IVPintegrator<T> for PredictorCorrector12<T>
+impl<T> IVPIntegrator<T> for PredictorCorrector12<T>
 where
     T: Float + ScalarOperand,
     f64: Into<T>,

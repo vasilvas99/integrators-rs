@@ -1,5 +1,5 @@
 use clap::Parser;
-use integrators_rs::{euler::PredictorCorrector12, IVPintegrator, IVProblem, StaticVector};
+use integrators_rs::{euler::PredictorCorrector12, IVPIntegrator, IVProblem, StaticVector};
 use ndarray::Array;
 use plotly::common::Title;
 use plotly::layout::{Axis, Layout};
