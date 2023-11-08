@@ -32,8 +32,8 @@ impl<T: Float + ScalarOperand> PredictorCorrector11<T> {
     pub fn new(step: T, num_iters: Option<u64>) -> PredictorCorrector11<T> {
         let num_iters = num_iters.unwrap_or(3);
         PredictorCorrector11 {
-            step: step,
-            num_iters: num_iters,
+            step,
+            num_iters,
         }
     }
 }
@@ -44,8 +44,8 @@ impl<T: Float + ScalarOperand> PredictorCorrector12<T> {
     pub fn new(step: T, num_iters: Option<u64>) -> PredictorCorrector12<T> {
         let num_iters = num_iters.unwrap_or(3);
         PredictorCorrector12 {
-            step: step,
-            num_iters: num_iters,
+            step,
+            num_iters,
         }
     }
 }
@@ -134,12 +134,12 @@ mod tests {
 
     fn logistic_rhs(_t: f64, y: &StaticVector<f64>) -> StaticVector<f64> {
         let y_diff = -y + 1.0;
-        return y * y_diff * K_CONST_LOGISTIC;
+        y * y_diff * K_CONST_LOGISTIC
     }
 
     fn logistic_exact(t: f64) -> f64 {
         let denom = Y0_LOGISTIC + (1.0 - Y0_LOGISTIC) * f64::exp(-K_CONST_LOGISTIC * t);
-        return Y0_LOGISTIC / denom;
+        Y0_LOGISTIC / denom
     }
 
     #[test]

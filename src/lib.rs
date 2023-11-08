@@ -2,7 +2,6 @@ use ndarray::prelude::*;
 use num::Float;
 
 pub type StaticVector<T> = Array1<T>;
-
 pub mod euler;
 
 pub struct IVProblem<T> {
