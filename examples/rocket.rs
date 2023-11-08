@@ -117,6 +117,9 @@ fn main() {
     while problem.y[1] >= 0.0 {
         t += step;
         integrator.step_until(&mut problem, t);
+        if problem.t - t > 5.0 * step {
+            panic!("Integrator failed to step ahead 5 times => Integration failed.")
+        }
         x_vals.push(problem.y[0]);
         y_vals.push(problem.y[1]);
         println!("{}", problem.y)
