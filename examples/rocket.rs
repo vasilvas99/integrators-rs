@@ -83,10 +83,14 @@ fn plot(x_vals: Vec<f64>, y_vals: Vec<f64>, params: &Args) -> Result<(), Box<dyn
     fg.axes2d()
         .set_title(
             &format!(
-                "Mass: {m} kg, Drag coeff: {c}, v0: {v0} m/s",
+                "Mass: {m:.3} kg, Drag coefficient: {c:.3}, v_0: {v0:.3} m/s\n
+                Cross section: {s:.3} m^2, Air density: {rho:.3} kg/m^{{3}}, Shooting angle: {theta:.3} rad",
                 m = params.object_mass,
                 c = params.air_drag,
-                v0 = params.v0
+                v0 = params.v0,
+                s = params.cross_section,
+                rho = params.air_density,
+                theta = params.theta0
             ),
             &[],
         )
@@ -134,7 +138,6 @@ fn main() {
         }
         x_vals.push(problem.y[0]);
         y_vals.push(problem.y[1]);
-        println!("{}", problem.y)
     }
     println!("{:?}", cli);
     plot(x_vals, y_vals, &cli).expect("Plotting failed");
