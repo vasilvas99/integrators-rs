@@ -48,6 +48,10 @@ struct Args {
     #[arg(long, default_value_t = 0.25)]
     /// Cross section area (m^2)
     cross_section: f64,
+
+    #[arg(long, default_value_t = 0.01)]
+    /// Time step for integration
+    time_step: f64,
 }
 
 fn rhs_params(
@@ -115,7 +119,7 @@ fn main() {
         )
     });
 
-    let step = 0.01;
+    let step = cli.time_step;
     let mut t = cli.t0;
     let integrator = PredictorCorrector12::new(step, Some(10));
 
