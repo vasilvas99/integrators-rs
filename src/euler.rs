@@ -82,7 +82,7 @@ impl<T: Float + ScalarOperand> IVPIntegrator<T> for PredictorCorrector11<T> {
     }
 }
 
-impl<T> IVPIntegrator<T> for PredictorCorrector12<T>
+impl<T: Float + ScalarOperand> IVPIntegrator<T> for PredictorCorrector12<T>
 where
     T: Float + ScalarOperand,
     f64: Into<T>,
